@@ -87,6 +87,22 @@ get '/new_player' do
   erb :new_player
 end
 
+get '/bet' do 
+  erb :bet
+end
+
+post '/bet' do
+  @start_amount = 500 
+  session[:bet_amount] = params[:bet_amount]
+  if session[:bet_amount].to_i > @start_amount
+    puts "Sorry you don't have a enough money"
+  else
+    puts "Lets get started"
+  end
+  redirect '/game'
+  
+end
+
 post '/new_player' do
   if params[:player_name].empty?
     @error = "Name is required"
@@ -94,7 +110,7 @@ post '/new_player' do
   end
 # Why is this block not contain a elsif statment?
   session[:player_name] = params[:player_name]  
-  redirect '/game'
+  redirect '/bet'
   
 end
 
