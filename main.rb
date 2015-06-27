@@ -55,20 +55,20 @@ helpers do
     @play_again = true
     @show_hit_or_stay_buttons = false
     session[:player_pot] = session[:player_pot] + session[:player_bet]
-    @success = "<strong>#{session[:player_name]} wins!</strong> #{msg}"
+    @winner = "<strong>#{session[:player_name]} wins!</strong> #{msg}"
   end
 
   def loser!(msg)
     @play_again = true
     @show_hit_or_stay_buttons = false
     session[:player_pot] = session[:player_pot] - session[:player_bet]
-    @error = "<strong>#{session[:player_name]} loses!</strong> #{msg}"
+    @loser = "<strong>#{session[:player_name]} loses!</strong> #{msg}"
   end
 
   def tie!(msg)
     @play_again = true
     @show_hit_or_stay_buttons = false
-    @success = "<strong>#{session[:player_name]} loses.</strong> #{msg}"
+    @winner = "<strong>#{session[:player_name]} loses.</strong> #{msg}"
   end
 end
 
@@ -150,7 +150,7 @@ post '/game/player/hit' do
     loser!("It looks like #{session[:player_name]} busted.")
   end
 
-  erb :game
+  erb :game, layout: false
   
 end
 
@@ -179,7 +179,7 @@ get '/game/dealer' do
     @show_dealer_hit_button = true
   end
 
-  erb :game
+  erb :game, layout: false
 end
 
 post '/game/dealer/hit' do 
@@ -201,7 +201,7 @@ get '/game/compare' do
     tie!("Both #{session[:player_name]} and the dealer stayed at #{player_total}.")
   end
 
-  erb :game
+  erb :game, layout: false
   
 end
 
